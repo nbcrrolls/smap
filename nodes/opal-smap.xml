@@ -1,0 +1,35 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+
+	<description>
+	opal configuration 
+	</description>
+
+	<copyright>
+	Copyright (c) 2000 - 2012 The Regents of the University of California.
+	All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
+	
+	</copyright>
+
+	<changelog>
+	</changelog>
+
+
+	<package>opal-smap</package>
+<post>
+
+
+
+<file name="/opt/opal/deployed/deploy.sh" mode="append">
+
+$ANT -f $OPALXML deploy -DserviceName=SMAPPairComp -DappConfig=$OPALCONFIG/smap_pair_config.xml
+$ANT -f $OPALXML deploy -DserviceName=SMAPDBSearch -DappConfig=$OPALCONFIG/smap_db_search_config.xml
+
+
+</file>
+
+</post>
+
+</kickstart>

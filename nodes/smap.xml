@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+
+	<description>
+	Your Smap roll description here
+	</description>
+
+	<copyright>
+	Copyright (c) 2000 - 2012 The Regents of the University of California.
+	All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
+	
+	</copyright>
+
+	<changelog>
+	$Log: smap.xml,v $
+	Revision 1.1  2012/08/27 19:18:04  clem
+	First attempt with smap. All this is a big hack, I could not get the source code
+	so I copyed file from kriptonite and using sed to fix path problem.
+	
+	
+	</changelog>
+
+
+	<package>roll-smap-usersguide</package>
+	<package>smap</package>
+
+
+</kickstart>

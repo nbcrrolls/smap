@@ -20,15 +20,37 @@
 	<package>opal-smap</package>
 <post>
 
+#
+# fix the hostname
+#
+tempname="rollhost"
+SERVER_NAME="&opal_public_fqdn;"
+if [ "$SERVER_NAME" == "" ] ; then
+        #if this is a frontend installation the
+        #opal_public_fqdn is not set yet
+        SERVER_NAME="&Kickstart_PublicHostname;"
+fi
 
+
+
+#set up the web server
+ln -s /opt/smap/ws_doc /var/www/html/smap_ws
+
+sed -i 
+
+
+#deploy services in opal
+if [ -f /opt/opal/deployed/deploy.sh ] ; then 
 
 <file name="/opt/opal/deployed/deploy.sh" mode="append">
 
+#  ----    SMAP services   ----
 $ANT -f $OPALXML deploy -DserviceName=SMAPPairComp -DappConfig=$OPALCONFIG/smap_pair_config.xml
 $ANT -f $OPALXML deploy -DserviceName=SMAPDBSearch -DappConfig=$OPALCONFIG/smap_db_search_config.xml
 
-
 </file>
+
+fi
 
 </post>
 

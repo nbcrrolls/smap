@@ -307,7 +307,7 @@ SMAP Programmatic Access Tutoria: http://nbcr.sdsc.edu/pub/wiki/index.php?title=
     </types>
 
   </metadata>
-<!--  <jobManagerFQCN>edu.sdsc.nbcr.opal.manager.ForkJobManager</jobManagerFQCN>-->
+  <jobManagerFQCN>edu.sdsc.nbcr.opal.manager.ForkJobManager</jobManagerFQCN>
   <binaryLocation>/opt/smap/smap_opal/smap_pair_comp.sh</binaryLocation>
   <defaultArgs></defaultArgs>
   <parallel>false</parallel>

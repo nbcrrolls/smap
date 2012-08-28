@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1 2012/08/27 19:18:14 clem Exp $
+# $Id: Makefile,v 1.2 2012/08/28 05:16:29 clem Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.2  2012/08/28 05:16:29  clem
+# first round of fixes
+#
 # Revision 1.1  2012/08/27 19:18:14  clem
 # First attempt with smap. All this is a big hack, I could not get the source code
 # so I copyed file from kriptonite and using sed to fix path problem.
@@ -74,9 +77,10 @@ build:
 	( 							\
 		cd $(NAME);				\
 		for i in `grep -rl /nas/opaluser/smap *`;do \
-		sed -i 's:/nas/opaluser/smap:/opt/smap:g' $$i ;\
+			sed -i 's:/nas/opaluser/smap:/opt/smap:g' $$i ;\
 		done \
 	)
+	patch -p0 < patch
 	
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)

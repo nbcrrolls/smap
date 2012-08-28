@@ -36,7 +36,12 @@ fi
 #set up the web server
 ln -s /opt/smap/ws_doc /var/www/html/smap_ws
 
-sed -i 
+
+TEMPNAME="kryptonite.nbcr.net"
+change_list=`grep -r -l $TEMPNAME /opt/smap/ws_doc/*`
+for i in $change_list; do \
+  sed -i "s/$TEMPNAME/$SERVER_NAME/g" $i; \
+done
 
 
 #deploy services in opal

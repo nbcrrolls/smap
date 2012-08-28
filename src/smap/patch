@@ -1,0 +1,146 @@
+diff -ur smap_orig/smap_opal/build_user_objects_sge.sh smap/smap_opal/build_user_objects_sge.sh
+--- smap_orig/smap_opal/build_user_objects_sge.sh	2012-08-27 19:43:37.077538274 -0700
++++ smap/smap_opal/build_user_objects_sge.sh	2012-08-27 19:45:40.353518467 -0700
+@@ -1,9 +1,10 @@
+ #!/bin/bash
+ 
+ # NPW 
+-ls /nas/opaluser > /dev/null
+ 
+ SMAPROOT=/opt/smap
++. /etc/profile.d/sge-binaries.sh
++
+ 
+ build_file=$1
+ 
+@@ -42,7 +43,6 @@
+ echo "#$ -e smap_build_error.log" >> $smap_build_sge_script
+ 
+ echo "" >> $smap_build_sge_script
+-echo "ls /nas/opaluser > /dev/null" >> $smap_build_sge_script
+ 
+ echo "mol=\$(cat $cdir/$build_file | head -n \$SGE_TASK_ID | tail -n 1 | cut -f1 -d' ')" >> $smap_build_sge_script
+ echo "mol_type=\$(cat $cdir/$build_file | head -n \$SGE_TASK_ID | tail -n 1 | cut -f2 -d' ')" >> $smap_build_sge_script
+diff -ur smap_orig/smap_opal/get_sorted_html_sge.sh smap/smap_opal/get_sorted_html_sge.sh
+--- smap_orig/smap_opal/get_sorted_html_sge.sh	2012-08-27 19:43:37.077538274 -0700
++++ smap/smap_opal/get_sorted_html_sge.sh	2012-08-27 19:45:58.441517979 -0700
+@@ -1,11 +1,13 @@
+ #!/bin/bash
+ 
+ #NPW 
+-ls /nas/opaluser > /dev/null 
+ 
+ SMAPROOT=/opt/smap
+ qopt=""
+ 
++. /etc/profile.d/sge-binaries.sh
++
++
+ sge_script=smap_make_sorted_html.sh
+ cdir=`pwd`
+ 
+@@ -18,7 +20,6 @@
+ #NPW echo "#$ -o $cdir/smap_get_sorted_html_output.log" >> $sge_script
+ #NPW echo "#$ -e $cdir/smap_get_sorted_html_error.log" >> $sge_script
+ echo "" >> $sge_script
+-echo "ls /nas/opaluser > /dev/null " >> $sge_script
+ echo "cd $cdir" >> $sge_script
+ echo "$SMAPROOT/smap_opal/sort_rawscore.sh $cdir/outdir" >> $sge_script
+ echo "$SMAPROOT/smap_opal/make_sort_html.sh" >> $sge_script
+diff -ur smap_orig/smap_opal/make_html_sge.sh smap/smap_opal/make_html_sge.sh
+--- smap_orig/smap_opal/make_html_sge.sh	2012-08-27 19:43:37.077538274 -0700
++++ smap/smap_opal/make_html_sge.sh	2012-08-27 19:46:17.129505936 -0700
+@@ -1,10 +1,11 @@
+ #!/bin/bash
+ 
+ # NPW
+-ls /nas/opaluser > /dev/null
+ 
+ SMAPROOT=/opt/smap
+ 
++. /etc/profile.d/sge-binaries.sh
++
+ id_file=$1
+ 
+ if test -z $id_file || test ! -e $id_file; then
+@@ -35,7 +36,6 @@
+ echo "TEMPLATE_SEED=\$(cat $cdir/temp_query_comp_ids.txt | head -n \$SGE_TASK_ID | tail -n 1 | awk '{print \$1}')" >> $sge_script
+ echo "QUERY_SEED=\$(cat $cdir/temp_query_comp_ids.txt | head -n \$SGE_TASK_ID | tail -n 1 | awk '{print \$2}')" >> $sge_script
+ echo "output_file=\$QUERY_SEED-\$TEMPLATE_SEED.smap" >> $sge_script
+-echo "ls /nas/opaluser > /dev/null" >> $sge_script
+ echo "cd $cdir" >> $sge_script
+ echo "$SMAPROOT/smap_opal/make_html_single.sh \$TEMPLATE_SEED \$QUERY_SEED $cdir html" >> $sge_script
+ echo "cd PDBs" >> $sge_script
+diff -ur smap_orig/smap_opal/run_user_smap_comp_sge.sh smap/smap_opal/run_user_smap_comp_sge.sh
+--- smap_orig/smap_opal/run_user_smap_comp_sge.sh	2012-08-27 19:43:37.077538274 -0700
++++ smap/smap_opal/run_user_smap_comp_sge.sh	2012-08-27 19:46:25.505506669 -0700
+@@ -1,7 +1,9 @@
+ #!/bin/bash
+ 
+ # NPW 20110929 
+-ls /nas/opaluser > /dev/null
++
++. /etc/profile.d/sge-binaries.sh
++
+ 
+ SMAPROOT=/opt/smap
+ 
+@@ -55,7 +57,6 @@
+ echo "#$ -e smap_comp_error.log" >> $smap_comp_sge_script
+ echo "" >> $smap_comp_sge_script
+ #NPW add this to mount filesystem
+-echo "ls /nas/opaluser > /dev/null" >> $smap_comp_sge_script
+ echo "TEMPLATE_SEED=\$(cat $cdir/temp_query_comp_ids.txt | head -n \$SGE_TASK_ID | tail -n 1 | awk '{print \$1}')" >> $smap_comp_sge_script
+ echo "QUERY_SEED=\$(cat $cdir/temp_query_comp_ids.txt | head -n \$SGE_TASK_ID | tail -n 1 | awk '{print \$2}')" >> $smap_comp_sge_script
+ echo "output_file=\$QUERY_SEED-\$TEMPLATE_SEED.smap" >> $smap_comp_sge_script
+diff -ur smap_orig/smap_opal/smap_db_search.sh smap/smap_opal/smap_db_search.sh
+--- smap_orig/smap_opal/smap_db_search.sh	2012-08-27 19:43:37.077538274 -0700
++++ smap/smap_opal/smap_db_search.sh	2012-08-27 19:47:51.066506706 -0700
+@@ -1,14 +1,13 @@
+ #!/bin/bash
+ 
+ # NPW 
+-ls /nas/opaluser > /dev/null 
+ 
+ export PATH=/opt/gridengine/bin/lx26-x86/:$PATH
+ 
+ SMAPROOT=/opt/smap
+ QUERY_CONFORMER_UNIT_DIR=/opt/smap/QUERY_CONFORMER_UNIT_DIR
+ # Need to add code in smap install to get jmol dir
+-JMOL_DIR=/nas/opaluser/jmol-11.9.11/
++JMOL_DIR=/opt/smap/jmol-11.9.11/
+ DB_DIR=$SMAPROOT/DB/
+ 
+ echo $@ > command.txt
+@@ -162,7 +161,7 @@
+ 
+ cp $SMAPROOT/pdb.properties .
+ # NPW 20110929
+-sed -i "s%TEMPLATE_CONFORMER_UNIT_DIR=\/nas\/opaluser\/smap\/%TEMPLATE_CONFORMER_UNIT_DIR=$TEMPLATE_CONFORMER_UNIT_DIR%" pdb.properties
++sed -i "s%TEMPLATE_CONFORMER_UNIT_DIR=\/opt\/smap\/%TEMPLATE_CONFORMER_UNIT_DIR=$TEMPLATE_CONFORMER_UNIT_DIR%" pdb.properties
+ #sed -i "s%^TEMPLATE_CONFORMER_UNIT_DIR.*$%TEMPLATE_CONFORMER_UNIT_DIR=$TEMPLATE_CONFORMER_UNIT_DIR%" pdb.properties
+ 
+ mkdir PDBs
+diff -ur smap_orig/smap_opal/smap_pair_comp.sh smap/smap_opal/smap_pair_comp.sh
+--- smap_orig/smap_opal/smap_pair_comp.sh	2012-08-27 19:43:37.077538274 -0700
++++ smap/smap_opal/smap_pair_comp.sh	2012-08-27 19:48:51.873508744 -0700
+@@ -5,7 +5,7 @@
+ SMAPROOT=/opt/smap
+ QUERY_CONFORMER_UNIT_DIR=/opt/smap/QUERY_CONFORMER_UNIT_DIR
+ # Need to add code in smap install to get jmol dir
+-JMOL_DIR=/nas/opaluser/jmol-11.9.11/
++JMOL_DIR=/opt/smap/jmol-11.9.11/
+ DB_DIR=$SMAPROOT/DB/
+ 
+ echo $@ > command.txt
+@@ -156,8 +156,8 @@
+ 
+ cp $SMAPROOT/pdb.properties .
+ # NPW 20110929
+-sed -i "s%TEMPLATE_CONFORMER_UNIT_DIR=\/nas\/opaluser\/smap\/%TEMPLATE_CONFORMER_UNIT_DIR=$TEMPLATE_CONFORMER_UNIT_DIR%" pdb.properties
+-sed -i "s%QUERY_CONFORMER_UNIT_DIR=\/nas\/opaluser\/smap\/%QUERY_CONFORMER_UNIT_DIR=$QUERY_CONFORMER_UNIT_DIR%" pdb.properties
++sed -i "s%TEMPLATE_CONFORMER_UNIT_DIR=\/opt\/smap\/%TEMPLATE_CONFORMER_UNIT_DIR=$TEMPLATE_CONFORMER_UNIT_DIR%" pdb.properties
++sed -i "s%QUERY_CONFORMER_UNIT_DIR=\/opt\/smap\/%QUERY_CONFORMER_UNIT_DIR=$QUERY_CONFORMER_UNIT_DIR%" pdb.properties
+ #sed -i "s%^TEMPLATE_CONFORMER_UNIT_DIR.*$%TEMPLATE_CONFORMER_UNIT_DIR=$TEMPLATE_CONFORMER_UNIT_DIR%" pdb.properties
+ #sed -i "s%^QUERY_CONFORMER_UNIT_DIR.*$%QUERY_CONFORMER_UNIT_DIR=$QUERY_CONFORMER_UNIT_DIR%" pdb.properties
+ 

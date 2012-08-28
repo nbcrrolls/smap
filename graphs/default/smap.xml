@@ -16,6 +16,14 @@
 
 	<changelog>
 	$Log: smap.xml,v $
+	Revision 1.2  2012/08/28 21:00:36  clem
+	Second round of fixes
+	
+	 - added jmol
+	 - fixes several path problem in the script
+	 - created a shared area for creating temporary files
+	 - removed some useless log file from the smap.tar.gz
+	
 	Revision 1.1  2012/08/27 19:18:02  clem
 	First attempt with smap. All this is a big hack, I could not get the source code
 	so I copyed file from kriptonite and using sed to fix path problem.
@@ -26,6 +34,7 @@
 	<!-- add edges here -->
         <edge from="client" to="smap"/>
         <edge from="server" to="smap"/>
+        <edge from="server" to="smap-server"/>
 
         <!-- opal deployment -->
         <edge from="client" to="opal-smap" cond="opal_server"/>
@@ -35,5 +44,8 @@
                 <tail>opal-smap</tail>
         </order>
 	
+        <order head="opal-server">
+                <tail>smap-server</tail>
+        </order>
 
 </graph>

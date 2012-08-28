@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.2 2012/08/28 05:16:29 clem Exp $
+# $Id: Makefile,v 1.3 2012/08/28 21:00:37 clem Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,14 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.3  2012/08/28 21:00:37  clem
+# Second round of fixes
+#
+#  - added jmol
+#  - fixes several path problem in the script
+#  - created a shared area for creating temporary files
+#  - removed some useless log file from the smap.tar.gz
+#
 # Revision 1.2  2012/08/28 05:16:29  clem
 # first round of fixes
 #
@@ -81,6 +89,8 @@ build:
 		done \
 	)
 	patch -p0 < patch
+	rm -rf smap/LOCAL_PDB_DIR/PDB
+	ln -s /share/opal/smap/PDB smap/LOCAL_PDB_DIR/PDB
 	
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)

@@ -1,3 +1,23 @@
+diff -ur smap_orig/smap_build.sh smap/smap_build.sh
+--- smap_orig/smap_build.sh	2012-08-27 19:43:33.566503978 -0700
++++ smap/smap_build.sh	2012-08-28 09:22:47.054507026 -0700
+@@ -6,6 +6,6 @@
+ export SMAPROOT=/opt/smap
+ export CLASSPATH=${CLASSPATH}:${SMAPROOT}/classes:${SMAPROOT}/lib/biojava.jar:${SMAPROOT}/lib/pdblibs.jar:${SMAPROOT}/lib/pdbormapping.jar:${SMAPROOT}/lib/mbt.jar:${SMAPROOT}/lib/siteormapping.jar
+ 
+-/usr/java/jdk1.6.0_10/bin/java -Xmx1000M -cp ${CLASSPATH} org.interactome.ontology.funcunit.ConformerUnitIO -chain $chain -type $type
++/usr/java/jdk1.7.0_03/bin/java -Xmx1000M -cp ${CLASSPATH} org.interactome.ontology.funcunit.ConformerUnitIO -chain $chain -type $type
+ 
+ 
+diff -ur smap_orig/smap_comp.sh smap/smap_comp.sh
+--- smap_orig/smap_comp.sh	2012-08-27 19:44:03.262489836 -0700
++++ smap/smap_comp.sh	2012-08-28 09:23:02.470507516 -0700
+@@ -9,4 +9,4 @@
+ # pdb java
+ export CLASSPATH=${CLASSPATH}:${SMAPROOT}/classes:${SMAPROOT}/lib/biojava.jar:${SMAPROOT}/lib/pdblibs.jar:${SMAPROOT}/lib/pdbormapping.jar:${SMAPROOT}/lib/mbt.jar:${SMAPROOT}/lib/siteormapping.jar
+ 
+-/usr/java/jdk1.6.0_10/bin/java -Xmx1000M -cp ${CLASSPATH} org.interactome.siteengine.sitesearch.SMAP -templateChain $templChain -queryChain $queryChain -output $output
++/usr/java/jdk1.7.0_03/bin/java -Xmx1000M -cp ${CLASSPATH} org.interactome.siteengine.sitesearch.SMAP -templateChain $templChain -queryChain $queryChain -output $output
 diff -ur smap_orig/smap_opal/build_user_objects_sge.sh smap/smap_opal/build_user_objects_sge.sh
 --- smap_orig/smap_opal/build_user_objects_sge.sh	2012-08-27 19:43:37.077538274 -0700
 +++ smap/smap_opal/build_user_objects_sge.sh	2012-08-27 19:45:40.353518467 -0700
@@ -95,7 +115,7 @@ diff -ur smap_orig/smap_opal/run_user_smap_comp_sge.sh smap/smap_opal/run_user_s
  echo "output_file=\$QUERY_SEED-\$TEMPLATE_SEED.smap" >> $smap_comp_sge_script
 diff -ur smap_orig/smap_opal/smap_db_search.sh smap/smap_opal/smap_db_search.sh
 --- smap_orig/smap_opal/smap_db_search.sh	2012-08-27 19:43:37.077538274 -0700
-+++ smap/smap_opal/smap_db_search.sh	2012-08-27 19:47:51.066506706 -0700
++++ smap/smap_opal/smap_db_search.sh	2012-08-28 10:30:33.759508860 -0700
 @@ -1,14 +1,13 @@
  #!/bin/bash
  
@@ -108,7 +128,7 @@ diff -ur smap_orig/smap_opal/smap_db_search.sh smap/smap_opal/smap_db_search.sh
  QUERY_CONFORMER_UNIT_DIR=/opt/smap/QUERY_CONFORMER_UNIT_DIR
  # Need to add code in smap install to get jmol dir
 -JMOL_DIR=/nas/opaluser/jmol-11.9.11/
-+JMOL_DIR=/opt/smap/jmol-11.9.11/
++JMOL_DIR=/opt/smap/jmol-13.0.1/
  DB_DIR=$SMAPROOT/DB/
  
  echo $@ > command.txt
@@ -123,13 +143,13 @@ diff -ur smap_orig/smap_opal/smap_db_search.sh smap/smap_opal/smap_db_search.sh
  mkdir PDBs
 diff -ur smap_orig/smap_opal/smap_pair_comp.sh smap/smap_opal/smap_pair_comp.sh
 --- smap_orig/smap_opal/smap_pair_comp.sh	2012-08-27 19:43:37.077538274 -0700
-+++ smap/smap_opal/smap_pair_comp.sh	2012-08-27 19:48:51.873508744 -0700
++++ smap/smap_opal/smap_pair_comp.sh	2012-08-28 10:30:11.383507342 -0700
 @@ -5,7 +5,7 @@
  SMAPROOT=/opt/smap
  QUERY_CONFORMER_UNIT_DIR=/opt/smap/QUERY_CONFORMER_UNIT_DIR
  # Need to add code in smap install to get jmol dir
 -JMOL_DIR=/nas/opaluser/jmol-11.9.11/
-+JMOL_DIR=/opt/smap/jmol-11.9.11/
++JMOL_DIR=/opt/smap/jmol-13.0.1/
  DB_DIR=$SMAPROOT/DB/
  
  echo $@ > command.txt

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.3 2012/08/28 21:00:37 clem Exp $
+# $Id: Makefile,v 1.4 2012/08/29 22:12:16 clem Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,15 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.4  2012/08/29 22:12:16  clem
+# As ugly as it can get!!
+#
+# Obviously spooling of temporary txt file is done in the same directory
+# where the binaries are!
+# So we have a directory where the binaries are which must be writable by users :-(
+#
+# The spooling path is hardcoded in the java class
+#
 # Revision 1.3  2012/08/28 21:00:37  clem
 # Second round of fixes
 #
@@ -91,6 +100,10 @@ build:
 	patch -p0 < patch
 	rm -rf smap/LOCAL_PDB_DIR/PDB
 	ln -s /share/opal/smap/PDB smap/LOCAL_PDB_DIR/PDB
+	# as ugly as it can get 
+	# obviously spooling of temporary txt file is done in the same directory 
+	# where the binaries are! so it need to be writable by users :-(
+	chmod 777 smap/external/qhull/linux/
 	
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)

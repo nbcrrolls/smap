@@ -1,4 +1,4 @@
-ROLL			= browndye
+ROLL			= smap
 NAME    		= roll-$(ROLL)-usersguide
 RELEASE			= 0
 

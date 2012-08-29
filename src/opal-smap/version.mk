@@ -1,3 +1,3 @@
 PKGROOT		= /opt/opal/deployed/
-NAME    	= opal-browndye
+NAME    	= opal-smap
 RELEASE 	= 1

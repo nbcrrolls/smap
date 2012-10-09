@@ -1,0 +1,75 @@
+diff -ru smap_orig/smap_opal/build_user_objects_sge.sh smap/smap_opal/build_user_objects_sge.sh
+--- smap_orig/smap_opal/build_user_objects_sge.sh	2012-08-29 14:26:34.000000000 -0700
++++ smap/smap_opal/build_user_objects_sge.sh	2012-10-08 10:04:36.095974141 -0700
+@@ -24,11 +24,6 @@
+ total_build=`wc -l $build_file | awk '{print $1}'`
+ cdir=`pwd`
+ 
+-if test "$total_build" -ge 10; then
+-  qopt="-l urgent"
+-else
+-  qopt=""
+-fi
+ 
+ echo "#!/bin/bash" > $smap_build_sge_script
+ echo "#$ -clear" >> $smap_build_sge_script
+diff -ru smap_orig/smap_opal/make_html_sge.sh smap/smap_opal/make_html_sge.sh
+--- smap_orig/smap_opal/make_html_sge.sh	2012-08-29 14:26:34.000000000 -0700
++++ smap/smap_opal/make_html_sge.sh	2012-10-08 10:32:15.368956118 -0700
+@@ -16,11 +16,6 @@
+ total=`wc -l $id_file | awk '{print $1}'`
+ cdir=`pwd`
+ 
+-if test "$total" -ge 10; then
+-  qopt="-l urgent"
+-else
+-  qopt=""
+-fi
+ 
+ sge_script="make_html_sge.sh"
+ 
+@@ -31,6 +26,7 @@
+ echo "#$ -cwd" >> $sge_script
+ echo "#$ -o make_html_output.log" >> $sge_script
+ echo "#$ -e make_html_error.log" >> $sge_script
++echo "#$ -p -1000" >> $sge_script
+ #NPWecho "#$ -o $cdir/make_html_output.log" >> $sge_script
+ #NPWecho "#$ -e $cdir/make_html_error.log" >> $sge_script
+ echo "TEMPLATE_SEED=\$(cat $cdir/temp_query_comp_ids.txt | head -n \$SGE_TASK_ID | tail -n 1 | awk '{print \$1}')" >> $sge_script
+diff -ru smap_orig/smap_opal/run_user_smap_comp_sge.sh smap/smap_opal/run_user_smap_comp_sge.sh
+--- smap_orig/smap_opal/run_user_smap_comp_sge.sh	2012-08-29 14:26:34.000000000 -0700
++++ smap/smap_opal/run_user_smap_comp_sge.sh	2012-10-08 10:25:37.925983653 -0700
+@@ -54,6 +54,7 @@
+ #NPW echo "#$ -e $cdir/smap_comp_error.log" >> $smap_comp_sge_script
+ echo "#$ -cwd" >> $smap_comp_sge_script
+ echo "#$ -o smap_comp_output.log" >> $smap_comp_sge_script
++echo "#$ -p -1000 " >> $smap_comp_sge_script
+ echo "#$ -e smap_comp_error.log" >> $smap_comp_sge_script
+ echo "" >> $smap_comp_sge_script
+ #NPW add this to mount filesystem
+@@ -78,11 +79,6 @@
+ #echo "echo Time right after smap_comp: \$time >> $cdir/smap_comp_logs/\$QUERY_SEED-\$TEMPLATE_SEED.log" >> $smap_comp_sge_script
+ #echo "rm -f $cdir/smap_comp_logs/\$QUERY_SEED-\$TEMPLATE_SEED.log.tmp" >> $smap_comp_sge_script
+ 
+-if test "$total" -ge 10; then
+-  qopt="-l urgent"
+-else
+-  qopt=""
+-fi
+ 
+ echo Submitting the job smap_comp to the scheduler on `hostname`
+ echo "Start smap_comp: " `date`
+diff -ru smap_orig/smap_opal/smap_db_search.sh smap/smap_opal/smap_db_search.sh
+--- smap_orig/smap_opal/smap_db_search.sh	2012-08-29 14:26:34.000000000 -0700
++++ smap/smap_opal/smap_db_search.sh	2012-10-08 11:26:43.431080626 -0700
+@@ -155,6 +155,10 @@
+   fi
+ fi
+ 
++
++mkdir smap_comp_logs/
++mkdir smap_build_logs/
++
+ mkdir TEMPLATE_CONFORMER_UNIT_DIR
+ TEMPLATE_CONFORMER_UNIT_DIR=`pwd`/
+ #NPW 20110929 TEMPLATE_CONFORMER_UNIT_DIR=`pwd`/TEMPLATE_CONFORMER_UNIT_DIR

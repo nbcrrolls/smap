@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.4 2012/08/29 22:12:16 clem Exp $
+# $Id: Makefile,v 1.5 2012/10/09 17:28:47 clem Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.5  2012/10/09 17:28:47  clem
+# removed urgent queue from opal script
+# create log directory in the job WD
+#
 # Revision 1.4  2012/08/29 22:12:16  clem
 # As ugly as it can get!!
 #
@@ -98,6 +102,8 @@ build:
 		done \
 	)
 	patch -p0 < patch
+	# remove urgent queue requeste in qsub script
+	patch -p0 < patch_urgent
 	rm -rf smap/LOCAL_PDB_DIR/PDB
 	ln -s /share/opal/smap/PDB smap/LOCAL_PDB_DIR/PDB
 	# as ugly as it can get 

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.5 2012/10/09 17:28:47 clem Exp $
+# $Id: Makefile,v 1.6 2013/02/05 19:36:11 nadya Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.6  2013/02/05 19:36:11  nadya
+# increase JVM heap size to 2G in smap_comp.sh
+#
 # Revision 1.5  2012/10/09 17:28:47  clem
 # removed urgent queue from opal script
 # create log directory in the job WD
@@ -104,6 +107,8 @@ build:
 	patch -p0 < patch
 	# remove urgent queue requeste in qsub script
 	patch -p0 < patch_urgent
+	# set java heap size to 2Gb 
+	patch -p0 < patch_jvm
 	rm -rf smap/LOCAL_PDB_DIR/PDB
 	ln -s /share/opal/smap/PDB smap/LOCAL_PDB_DIR/PDB
 	# as ugly as it can get 
@@ -118,4 +123,4 @@ install::
 	)
 
 clean::
-	rm -rf $(NAME)-$(VERSION)
+	rm -rf $(NAME)

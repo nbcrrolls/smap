@@ -70,7 +70,7 @@ SMAP Programmatic Access Tutoria: http://nbcr.sdsc.edu/pub/wiki/index.php?title=
                 <value>true</value>
                 <value>false</value>
                 <default>false</default>
-                <textDesc>Output template ligand</textDesc>
+                <textDesc>Output template ligands</textDesc>
             </param>
             <param>
                 <id>template_pdb_file</id>
@@ -199,6 +199,17 @@ SMAP Programmatic Access Tutoria: http://nbcr.sdsc.edu/pub/wiki/index.php?title=
                 <textDesc>&lt;a href="http://funsite.sdsc.edu/scb/smap/document.html#LIGAND_CONTACT_DISTANCE_CUTOFF"&gt;Ligand Contact Distance Cutoff&lt;/A&gt;</textDesc>
             </param>
             <param>
+                <id>struct_file_format</id>
+                <tag>struct_file_format</tag>
+                <paramType>STRING</paramType>
+                <required>true</required>
+                <value>PDB</value>
+                <value>XML</value>
+                <value>BLU</value>
+                <default>PDB</default>
+                <textDesc>Structure file type</textDesc>
+            </param>
+            <param>
                 <id>SCORE_MATRIX</id>
                 <tag>SCORE_MATRIX</tag>
                 <paramType>STRING</paramType>
@@ -216,7 +227,7 @@ SMAP Programmatic Access Tutoria: http://nbcr.sdsc.edu/pub/wiki/index.php?title=
                 <value>true</value>
                 <value>false</value>
                 <default>false</default>
-                <textDesc>Search only co-crystal ligand binding site</textDesc>
+                <textDesc>Search only co-crystal template ligand binding site</textDesc>
             </param>
             <param>
                 <id>QUERY_LIGAND_SITE_ONLY</id>
@@ -226,7 +237,7 @@ SMAP Programmatic Access Tutoria: http://nbcr.sdsc.edu/pub/wiki/index.php?title=
                 <value>true</value>
                 <value>false</value>
                 <default>false</default>
-                <textDesc>Search only co-crystal ligand binding site</textDesc>
+                <textDesc>Search only co-crystal query ligand binding site</textDesc>
             </param>
         </taggedParams>
     
@@ -238,7 +249,7 @@ SMAP Programmatic Access Tutoria: http://nbcr.sdsc.edu/pub/wiki/index.php?title=
             </elements>
             <required>true</required>
             <exclusive>true</exclusive>
-            <textDesc>&lt;B&gt;FIRST STRUCTURE&lt;/B&gt;</textDesc>
+            <textDesc>&lt;B&gt;TEMPLATE STRUCTURE&lt;/B&gt;</textDesc>
           </group>
           <group>
             <name>template_chain</name>
@@ -257,7 +268,7 @@ SMAP Programmatic Access Tutoria: http://nbcr.sdsc.edu/pub/wiki/index.php?title=
             </elements>
             <required>true</required>
             <exclusive>true</exclusive>
-            <textDesc>&lt;B&gt;SECOND STRUCTURE&lt;/B&gt;</textDesc>
+            <textDesc>&lt;B&gt;QUERY STRUCTURE&lt;/B&gt;</textDesc>
           </group>
           <group>
             <name>query_chain</name>
@@ -286,6 +297,7 @@ SMAP Programmatic Access Tutoria: http://nbcr.sdsc.edu/pub/wiki/index.php?title=
             <name>comparison_two_proteins</name>
             <elements>
               <!--LOCAL_SCORE PRINT_PDB MATCH_SECONDARY_STRUCTURE-->
+              struct_file_format 
               SCORE_MATRIX 
               LIGAND_CONTACT_DISTANCE_CUTOFF
               VIRTUAL_LIGAND_RANGE_CUTOFF

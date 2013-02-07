@@ -1,8 +1,0 @@
---- smap_orig/smap_comp.sh	2013-02-05 10:30:40.780125081 -0800
-+++ smap/smap_comp.sh	2013-02-05 10:31:34.777877429 -0800
-@@ -9,4 +9,4 @@
- # pdb java
- export CLASSPATH=${CLASSPATH}:${SMAPROOT}/classes:${SMAPROOT}/lib/biojava.jar:${SMAPROOT}/lib/pdblibs.jar:${SMAPROOT}/lib/pdbormapping.jar:${SMAPROOT}/lib/mbt.jar:${SMAPROOT}/lib/siteormapping.jar
- 
--/usr/java/jdk1.7.0_03/bin/java -Xmx1000M -cp ${CLASSPATH} org.interactome.siteengine.sitesearch.SMAP -templateChain $templChain -queryChain $queryChain -output $output
-+/usr/java/jdk1.7.0_03/bin/java -Xmx2048M  -Xms2048M -cp ${CLASSPATH} org.interactome.siteengine.sitesearch.SMAP -templateChain $templChain -queryChain $queryChain -output $output

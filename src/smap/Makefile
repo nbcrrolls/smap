@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.6 2013/02/05 19:36:11 nadya Exp $
+# $Id: Makefile,v 1.7 2013/02/07 08:19:52 nadya Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.7  2013/02/07 08:19:52  nadya
+# *** empty log message ***
+#
 # Revision 1.6  2013/02/05 19:36:11  nadya
 # increase JVM heap size to 2G in smap_comp.sh
 #
@@ -107,8 +110,6 @@ build:
 	patch -p0 < patch
 	# remove urgent queue requeste in qsub script
 	patch -p0 < patch_urgent
-	# set java heap size to 2Gb 
-	patch -p0 < patch_jvm
 	rm -rf smap/LOCAL_PDB_DIR/PDB
 	ln -s /share/opal/smap/PDB smap/LOCAL_PDB_DIR/PDB
 	# as ugly as it can get 

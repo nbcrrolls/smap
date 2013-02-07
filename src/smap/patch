@@ -17,7 +17,7 @@ diff -ur smap_orig/smap_comp.sh smap/smap_comp.sh
  export CLASSPATH=${CLASSPATH}:${SMAPROOT}/classes:${SMAPROOT}/lib/biojava.jar:${SMAPROOT}/lib/pdblibs.jar:${SMAPROOT}/lib/pdbormapping.jar:${SMAPROOT}/lib/mbt.jar:${SMAPROOT}/lib/siteormapping.jar
  
 -/usr/java/jdk1.6.0_10/bin/java -Xmx1000M -cp ${CLASSPATH} org.interactome.siteengine.sitesearch.SMAP -templateChain $templChain -queryChain $queryChain -output $output
-+/usr/java/jdk1.7.0_03/bin/java -Xmx1000M -cp ${CLASSPATH} org.interactome.siteengine.sitesearch.SMAP -templateChain $templChain -queryChain $queryChain -output $output
++/usr/java/jdk1.7.0_03/bin/java -Xmx2048M  -Xms2048M -cp ${CLASSPATH} org.interactome.siteengine.sitesearch.SMAP -templateChain $templChain -queryChain $queryChain -output $output
 diff -ur smap_orig/smap_opal/build_user_objects_sge.sh smap/smap_opal/build_user_objects_sge.sh
 --- smap_orig/smap_opal/build_user_objects_sge.sh	2012-08-27 19:43:37.077538274 -0700
 +++ smap/smap_opal/build_user_objects_sge.sh	2012-08-27 19:45:40.353518467 -0700
@@ -142,8 +142,8 @@ diff -ur smap_orig/smap_opal/smap_db_search.sh smap/smap_opal/smap_db_search.sh
  
  mkdir PDBs
 diff -ur smap_orig/smap_opal/smap_pair_comp.sh smap/smap_opal/smap_pair_comp.sh
---- smap_orig/smap_opal/smap_pair_comp.sh	2012-08-27 19:43:37.077538274 -0700
-+++ smap/smap_opal/smap_pair_comp.sh	2012-08-28 10:30:11.383507342 -0700
+--- smap_orig/smap_opal/smap_pair_comp.sh	2013-02-07 00:11:29.869127323 -0800
++++ smap/smap_opal/smap_pair_comp.sh	2013-02-06 22:02:50.356877073 -0800
 @@ -5,7 +5,7 @@
  SMAPROOT=/opt/smap
  QUERY_CONFORMER_UNIT_DIR=/opt/smap/QUERY_CONFORMER_UNIT_DIR
@@ -153,7 +153,16 @@ diff -ur smap_orig/smap_opal/smap_pair_comp.sh smap/smap_opal/smap_pair_comp.sh
  DB_DIR=$SMAPROOT/DB/
  
  echo $@ > command.txt
-@@ -156,8 +156,8 @@
+@@ -24,6 +24,8 @@
+ 
+ while [ "$1" != "" ]; do
+   case $1 in
++    struct_file_format\=* )                struct_file_format=`parse $1`
++                                           ;;
+     query_db_file_op\=* )                  query_db_file_op=`parse $1`
+                                            ;;
+     template_pdb_id\=* )                   template_pdb_id=`parse $1 | tr '[a-z]' '[A-Z]'`
+@@ -156,11 +158,13 @@
  
  cp $SMAPROOT/pdb.properties .
  # NPW 20110929
@@ -161,6 +170,11 @@ diff -ur smap_orig/smap_opal/smap_pair_comp.sh smap/smap_opal/smap_pair_comp.sh
 -sed -i "s%QUERY_CONFORMER_UNIT_DIR=\/nas\/opaluser\/smap\/%QUERY_CONFORMER_UNIT_DIR=$QUERY_CONFORMER_UNIT_DIR%" pdb.properties
 +sed -i "s%TEMPLATE_CONFORMER_UNIT_DIR=\/opt\/smap\/%TEMPLATE_CONFORMER_UNIT_DIR=$TEMPLATE_CONFORMER_UNIT_DIR%" pdb.properties
 +sed -i "s%QUERY_CONFORMER_UNIT_DIR=\/opt\/smap\/%QUERY_CONFORMER_UNIT_DIR=$QUERY_CONFORMER_UNIT_DIR%" pdb.properties
++sed -i "s%=PDB%=$struct_file_format%" pdb.properties
  #sed -i "s%^TEMPLATE_CONFORMER_UNIT_DIR.*$%TEMPLATE_CONFORMER_UNIT_DIR=$TEMPLATE_CONFORMER_UNIT_DIR%" pdb.properties
  #sed -i "s%^QUERY_CONFORMER_UNIT_DIR.*$%QUERY_CONFORMER_UNIT_DIR=$QUERY_CONFORMER_UNIT_DIR%" pdb.properties
  
++
+ mkdir PDBs
+ cp $SMAPROOT/classes/smapdefault.properties.in smap.properties
+ $SMAPROOT/smap_opal/update_smap_properties.sh smap.properties.info

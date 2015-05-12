@@ -1,0 +1,6 @@
+This roll isntalls SMAP software package and 2 opal web services
+
+   1 "SMAP Database search" allows one structure of interest to be searched against a database.
+   2 "SMAP Pairwise Comparison" - for pairwise comparisons.
+
+The source for SMAP is available form the private sources repo
